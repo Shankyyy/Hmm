@@ -1,0 +1,88 @@
+/*
+ * Created by SharpDevelop.
+ * User: Shankar S
+ * Date: 3/7/2018
+ * Time: 9:21 PM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Queue
+{
+	
+	class Program
+	{	
+		public int rear = 0,front = 0;
+		public string[] queue = new string[5];
+		
+		
+		public void enqueue()
+		{
+			if(rear < queue.Length)
+			{
+				Console.WriteLine("enter the value");
+			    queue[rear] = Console.ReadLine();
+			    rear++;
+			}
+			else
+			{
+				Console.WriteLine("queue full");
+			}
+			
+		}
+		
+		
+		public void dqueue()
+		{
+			if (front!=rear)
+			{
+				front++;
+			}
+			else{
+				Console.WriteLine("queue full");
+			}
+		}
+		
+		
+		public void display()
+		{
+			for (int i = front; i < rear; i++)
+			{
+				Console.WriteLine(queue[i]);
+			}
+		}
+		
+		
+		public static void Main(string[] args)
+		{
+			Program obj = new Program();
+			int choice;
+			bool loop = true;
+			while (loop) 
+			{
+				Console.WriteLine(" Enter\n 1 to Enqueue\n 2 to Dequeue\n 3 to Display\n 4 to Exit");
+				choice = int.Parse(Console.ReadLine());
+				switch (choice) {
+						case 1: obj.enqueue();
+						break;
+						case 2: obj.dqueue();
+						break;
+						case 3: obj.display();
+						break;
+						case 4: loop = false;
+						
+						Console.WriteLine("Exit Successfully");
+						break;
+						default: Console.WriteLine("Invalid");
+						break;
+						
+				}
+			}
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
+	
