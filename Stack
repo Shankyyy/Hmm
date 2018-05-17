@@ -1,0 +1,102 @@
+/*
+ * Created by SharpDevelop.
+ * User: Shankar S
+ * Date: 3/9/2018
+ * Time: 7:13 PM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Stack
+{
+	class Program
+	{
+	
+	    int[] arr= new int[5];
+		int top=-1;
+		
+		
+		public void push()
+		{
+			if(top==arr.Length)
+			{
+				Console.WriteLine("STACK OVERFLOW");
+			}
+			else
+			{
+				Console.WriteLine("ENTER VALUES IN STACK");
+				top++;
+				arr[top]=int.Parse(Console.ReadLine());
+			}
+		}
+		
+		
+		public void pop()
+		{
+			if(top==-1)
+			{
+				Console.WriteLine("STACK UNDERFLOW");
+			}
+			else
+			{
+				top--;
+			}
+		}
+		
+		
+		public void show()
+		{
+			if(top==-1)
+			{
+				Console.WriteLine("STACK IS EMPTY");
+			}
+			for(int i=0;i<=top;i++)
+			{
+				Console. Write(arr[i]+" ");
+			}
+			Console.WriteLine();
+		}
+		
+		
+		public static void Main(string[] args)
+		{
+			Program pm = new Program();
+		//	int c=10;
+			int ch;
+			bool loop=true;
+			//while(c<11)
+			while(loop)
+			{
+				Console.WriteLine("ENTER 1 for PUSH 2 for POP 3 for Display 4 to Exit");
+				
+				ch=int.Parse(Console.ReadLine());
+				switch(ch)
+				{
+					case 1:pm.push();
+						break;
+						
+					case 2:pm.pop();
+						break;
+						
+					case 3:pm.show();
+						break;
+						
+					case 4:loop=false;
+					Console.WriteLine("Exit Successfully");
+						break;
+						
+					default:
+						Console.WriteLine("WRONG INPUT");
+						break;
+				}
+				//Console.WriteLine("ENTER grater than 10 to exit");
+				//c=int.Parse(Console.ReadLine());
+			}
+			//Console.WriteLine("EXIT SUCCESSFUL");
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
