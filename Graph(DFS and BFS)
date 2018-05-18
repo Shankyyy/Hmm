@@ -1,0 +1,111 @@
+/*
+ * Created by SharpDevelop.
+ * User: Shankar S
+ * Date: 5/18/2018
+ * Time: 9:56 AM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace Graph_DFS_and_BFS_
+{
+	class graph
+	{
+		private int _v;
+		private bool _directed;
+		LinkedList<int>[]_adj;
+		public graph(int v,bool directed)
+		{
+			_adj=new LinkedList<int>[v];
+			for(int i=0;i<_adj.Length;i++)
+			{
+				_adj[i]=new LinkedList<int>();
+			}
+			_v=v;
+			_directed=directed;
+		}
+		public void AddEdge(int v ,int w)
+		{
+			_adj[v].AddLast(w);
+			if(!_directed)
+			{
+				_adj[w].AddLast(v);
+			}
+		}
+		public void DepthFirstSearch(int v )
+		{
+			bool[] Visited=new bool[_v];
+			for(int i =0;i<_v;i++)
+				Visited[i]=false;
+			DFSUtil(v,Visited);
+		}
+		public void BFS(int s)
+		{
+			bool[] visited=new bool[_v];
+			for(int i=0;i<_v;i++)
+			{
+				visited[i]=false;
+			}
+			LinkedList<int> queue=new LinkedList<int>();
+			visited[s]=true;
+			queue.AddLast(s);
+			while (queue.Any())
+			{
+				s=queue.First();
+				Console.Write(" "+s);
+				queue.RemoveFirst();
+				LinkedList<int>list=_adj[s];
+				foreach (var val in list) 
+				{
+					if(!visited[val])
+					{
+						visited[val]=true;
+						queue.AddLast(val);
+					}
+				}
+			}
+		}
+		private void DFSUtil(int v,bool[] Visited)
+		{
+			Visited[v]=true;
+			Console.Write(v+" ");
+			LinkedList<int> list=_adj[v];
+			foreach(var val in list)
+			{
+				if(!Visited[val])
+					DFSUtil(val,Visited);
+			}
+		}
+	}
+	class Program
+	{
+		static void Main(String[] args)
+		{
+			graph g=new graph(7,true);
+			g.AddEdge(0,2);
+			g.AddEdge(0,3);
+			g.AddEdge(1,0);
+			g.AddEdge(1,5);
+			g.AddEdge(2,5);
+			g.AddEdge(3,0);
+			g.AddEdge(3,4);
+			g.AddEdge(4,6);
+			g.AddEdge(5,1);
+			g.AddEdge(6,5);
+			Console.Write("Depth First Traversal From Vertex 2:\n");
+			g.DepthFirstSearch(0);
+			Console.WriteLine();
+			
+			Console.Write("Breadth First Traversal From Vertex 2:\n");
+			g.BFS(0);
+			Console.WriteLine();
+			Console.ReadKey();
+		
+		}
+	}
+}
