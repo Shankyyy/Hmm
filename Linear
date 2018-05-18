@@ -1,0 +1,41 @@
+/*
+ * Created by SharpDevelop.
+ * User: Shankar S
+ * Date: 5/17/2018
+ * Time: 1:59 PM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace LinearSearch
+{
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+			int [] array={1,2,3,4,5,6,7,8,9,0};
+			int look;
+			
+			Console.WriteLine("Enter look value");
+			{
+				look=int.Parse(Console.ReadLine());
+			}
+			
+			for(int i=0;i<array.Length;i++)
+			{
+				if(look==array[i])
+				   {
+					Console.WriteLine("Found");
+				   }
+		        else
+				{
+					Console.WriteLine("Not Found");
+				}
+			}
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
