@@ -1,0 +1,156 @@
+/*
+ * Created by SharpDevelop.
+ * User: Shankar S
+ * Date: 5/10/2018
+ * Time: 7:22 PM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Tree
+{
+	class Node
+	{
+		public int item;
+		public Node leftc;
+		public Node rightc;
+		
+		public void Display()
+		{
+			Console.Write("[");
+			Console.Write(item);
+			Console.Write("]");
+			
+		}
+				
+			
+		}
+	class Tree
+	{
+		public Node root;
+		
+		public Tree()
+		{
+			root=null;
+		}
+		public Node ReturnRoot()
+		{
+			return root;
+		}
+		public void Insert(int id)
+		{
+			Node newNode=new Node();
+			newNode.item=id;
+			
+			if(root==null)
+			{
+				root=newNode;
+			}
+			else
+			{
+				Node current =root;
+				Node parent;
+				
+				while(true)
+				{
+					parent=current;
+					
+					if(id<current.item)
+					{
+						current=current.leftc;
+						
+						if(current==null)
+						{
+							parent.leftc=newNode;
+							return;
+						}
+					}
+					else{
+						current=current.rightc;
+						if(current==null)
+						{
+							parent.rightc=newNode;
+							return;
+							
+						}
+					}
+				}
+			}
+		}
+		public void Preorder(Node root)
+	{
+		if(root!=null)
+		{
+			Console.Write(root.item + " ");
+			Preorder(root.leftc);
+			Preorder(root.rightc);
+			
+		}
+	}
+		public void Inorder(Node root)
+		{
+			if(root!=null)
+		{
+			
+			Inorder(root.leftc);
+			Console.Write(root.item + " ");
+			Inorder(root.rightc);
+			
+		}
+			
+		}
+		public void Postorder(Node root)
+	{
+		if(root!=null)
+		{
+			
+			Postorder(root.leftc);
+			Postorder(root.rightc);
+			Console.Write(root.item + " ");
+			
+		}
+	 }
+		
+	}
+	
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+			Tree obj=new Tree();
+			obj.Insert(10);
+			obj.Insert(20);
+			obj.Insert(30);
+			obj.Insert(40);
+			obj.Insert(50);
+			obj.Insert(60);
+			obj.Insert(70);
+			obj.Insert(80);
+			obj.Insert(90);
+			
+			Console.WriteLine("Inorder traversal");
+			obj.Inorder(obj.ReturnRoot());
+			Console.WriteLine(" ");
+			Console.WriteLine();
+			
+			Console.WriteLine("Preorder traversal");
+			obj.Preorder(obj.ReturnRoot());
+			Console.WriteLine(" ");
+			Console.WriteLine();
+			
+			Console.WriteLine("Postorder traversal");
+			obj.Postorder(obj.ReturnRoot());
+			Console.WriteLine(" ");
+			Console.WriteLine();
+			
+			
+			
+			
+			
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
