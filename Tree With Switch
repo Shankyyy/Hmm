@@ -1,0 +1,144 @@
+/*
+ * Created by SharpDevelop.
+ * User: aashi
+ * Date: 10-04-2018
+ * Time: 10:45
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace BinaryTreeSpace
+{
+	
+	class Node
+	{
+		public int item; //value in that node
+		public Node leftC; //left child
+		public Node rightC; //right child
+		
+		//displays the value inside bracket in this node object
+		public void Display()
+		{
+			Console.Write("[");
+			Console.Write(item);
+			Console.Write("]");
+		}
+	}
+	
+	class Tree
+	{
+		Node root; //root of tree
+		
+		//CONSTRUCTOR
+		public Tree() 
+		{
+			root=null; //initialize root with null
+		}
+		
+		//returns the root node object of this tree object
+		public Node ReturnRoot()
+		{
+			return root;
+		}
+		public void Insert(int id)
+		{
+			Node newNode = new Node();
+			newNode.item=id;
+			if (root== null) {
+				root=newNode;
+			}
+			else
+			{
+				Node current=root;
+				Node parent;
+				
+				while (true) {
+					parent=current;
+					if (id<current.item) 
+					{
+						current=current.leftC;
+						if (current==null) 
+						{
+							parent.leftC=newNode;
+							return;
+						}
+					}
+				}
+				else
+				{
+					current=current.rightC;
+					if (current== null) 
+					{
+						parent.rightC=newNode;
+						return;
+					}
+				}
+			}
+		}
+		public void PreOrder(Node root)
+		{
+			if(root!=null)
+			{
+				root.display();
+				PreOrder(root.leftc);
+				PreOrder(root.rightc);
+			}
+		}
+		public void PostOrder(Node root)
+		{
+			if(root!=null)
+			{
+				PostOrder(root.leftc);
+				PostOrder(root.rightc);
+				root.display();
+			}
+		}
+		public void InOrder(Node root)
+		{
+			if(root!=null)
+			{
+				InOrder(root.leftc);
+				root.display();
+				InOrder(root.rightc);
+			}
+		}
+	}
+	
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+			Tree theTree=new Tree();
+			int data;
+			int choice=0;
+			while (choice!=5) 
+			{
+				Console.WriteLine("\npress\n1.to add\n2.to display in In-Order traversal\n3.to display in Pre-Order traversal\n4.to display in Post-Order\n5.to exit");
+				choice=int.Parse(Console.ReadLine());
+				switch (choice) 
+				{
+						case 1:Console.WriteLine("enter data");
+						data=int.Parse(Console.ReadLine());
+						theTree.Insert(data);
+						break;
+						case 2:Console.WriteLine("In-Order (left-root-right)");
+						theTree.InOrder(theTree.returnRoot());
+						break;
+						case 3:Console.WriteLine("Pre-Order (root-left-right");
+						theTree.PreOrder(theTree.returnRoot());
+						break;
+						case 4:Console.WriteLine("Post Order (left-right-root)");
+						theTree.PostOrder(theTree.returnRoot());
+						break;
+						case 5:Console.WriteLine("exit successfull");
+						break;
+						default:Console.WriteLine("Invalid Input");
+						break;
+				}
+			}
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
