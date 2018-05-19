@@ -1,0 +1,154 @@
+/*
+ * Created by SharpDevelop.
+ * User: Shankar S
+ * Date: 5/10/2018
+ * Time: 7:22 PM
+ * 
+ * To change this template use Tools | Options | Coding | Edit Standard Headers.
+ */
+using System;
+
+namespace Tree
+{
+	class Node
+	{
+		public int item;
+		public Node leftc;
+		public Node rightc;
+		
+		public void Display()
+		{
+			Console.Write("[");
+			Console.Write(item);
+			Console.Write("]");
+			
+		}
+				
+			
+		}
+	class Tree
+	{
+		public Node root;
+		
+		public Tree()
+		{
+			root=null;
+		}
+		public Node ReturnRoot()
+		{
+			return root;
+		}
+		public void Insert(int id)
+		{
+			Node newNode=new Node();
+			newNode.item=id;
+			
+			if(root==null)
+			{
+				root=newNode;
+			}
+			else
+			{
+				Node current =root;
+				Node parent;
+				
+				while(true)
+				{
+					parent=current;
+					
+					if(id<current.item)
+					{
+						current=current.leftc;
+						
+						if(current==null)
+						{
+							parent.leftc=newNode;
+							return;
+						}
+					}
+					else
+					{
+						current=current.rightc;
+						if(current==null)
+						{
+							parent.rightc=newNode;
+							return;
+							
+						}
+					}
+				}
+			}
+		}
+		public void Preorder(Node root)
+	{
+		if(root!=null)
+		{
+			Console.Write(root.item + " ");
+			Preorder(root.leftc);
+			Preorder(root.rightc);
+			
+		}
+	}
+		public void Inorder(Node root)
+		{
+			if(root!=null)
+		{
+			
+			Inorder(root.leftc);
+			Console.Write(root.item + " ");
+			Inorder(root.rightc);
+			
+		}
+			
+		}
+		public void Postorder(Node root)
+	{
+		if(root!=null)
+		{
+			
+			Postorder(root.leftc);
+			Postorder(root.rightc);
+			Console.Write(root.item + " ");
+			
+		}
+	 }
+		
+	}
+	
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+			Tree theTree=new Tree();
+			int data;
+			int choice=0;
+			while (choice!=5) 
+			{
+				Console.WriteLine("\npress\n1.to add\n2.to display in In-Order traversal\n3.to display in Pre-Order traversal\n4.to display in Post-Order\n5.to exit");
+				choice=int.Parse(Console.ReadLine());
+				switch (choice) 
+				{
+						case 1:Console.WriteLine("enter data");
+						data=int.Parse(Console.ReadLine());
+						theTree.Insert(data);
+						break;
+						case 2:Console.WriteLine("In-Order (left-root-right)");
+						theTree.Inorder(theTree.ReturnRoot());
+						break;
+						case 3:Console.WriteLine("Pre-Order (root-left-right");
+						theTree.Preorder(theTree.ReturnRoot());
+						break;
+						case 4:Console.WriteLine("Post Order (left-right-root)");
+						theTree.Postorder(theTree.ReturnRoot());
+						break;
+						case 5:Console.WriteLine("exit successfull");
+						break;
+						default:Console.WriteLine("Invalid Input");
+						break;
+				}
+			}
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
