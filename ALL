@@ -1,0 +1,1201 @@
+1.BUBBLE SORTING
+
+namespace Bubblee
+{
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+			int [] array=new int[6]{0,4,5,7,2,3};
+			int temp=0;
+			
+			for (int i=0;i<array.Length;i++)
+			{
+				for (int j=0;j<array.Length;j++)
+					{
+					if(array[i]<array[j])
+					{
+						temp=array[i];
+						array[i]=array[j];
+						array[j]=temp;
+					}
+				}
+			}
+			for(int i=0;i<array.Length;i++)
+			{
+				Console.WriteLine(" "+ array[i]);
+			}
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
+
+
+2.SELECTION SORTING
+
+namespace Selectionn
+{
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+			int [] array=new int[6]{6,3,8,9,1,2};
+			int minimum,index;
+			
+			for (int i=0;i<array.Length;i++)
+			{
+				minimum=array[i];
+	
+			index=i;
+				
+				for(int j=i+1;j<array.Length;j++)
+				{
+					if(minimum>array[j])
+					{
+					minimum=array[j];
+					   index=j;
+					   
+					   array[index]=array[i];
+				           array[i]=minimum;
+					}
+					   
+				}
+				
+			}
+			for (int i=0;i<array.Length;i++)
+			{
+				Console.WriteLine(" "+array[i]);
+			}
+			Console.WriteLine();
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
+
+
+3.STACK
+
+namespace Stackk
+{
+	class Program
+	{ 
+		    int [] array=new int[50];
+			int top=-1;
+			
+			public void push()
+			{
+				if(top==array.Length)
+				{
+					Console.WriteLine("Stack is Full");
+				}
+				else
+				{
+					Console.WriteLine("Enter theValues");
+					top++;
+					array[top]=int.Parse(Console.ReadLine());
+					
+				}
+				
+			}
+			
+			public void pop()
+			{
+				if(top==-1)
+				{
+					Console.WriteLine("Stack is UnderFlow");
+				}
+				else
+				{
+					top--;
+				}
+				
+			}
+			
+			public void display()
+			{
+				if(top==-1)
+				{
+					Console.WriteLine("Stack is Full ");
+				}
+				
+				for (int i=0;i<top;i++)
+				{
+					Console.WriteLine(array[i]);
+				}
+			}
+		public static void Main(string[] args)
+		{
+			Program obj=new Program();
+			int choice;
+			bool loop=true;
+			
+			while(loop)
+			{
+				Console.WriteLine("Enter\n1 for Add\n2 for Delete\n3 for Display\n4 to Exit");
+				choice=int.Parse(Console.ReadLine());
+				
+				switch(choice)
+				{
+					case 1:
+						obj.push();
+						break;
+						
+					case 2:
+						obj.pop();
+						break;
+						
+					case 3:
+						obj.display();
+						break;
+						
+					default:
+						Console.WriteLine("Invalid");
+							break;
+				}
+			}
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
+
+
+
+4.BINARY SEARCH
+
+namespace Binaryy
+{
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+			int [] array={0,3,6,9,2,4,7,8,5,1};
+			int minimum=0;
+			int maximum=array.Length-1;
+			int mid;
+			int look;
+			
+			Console.WriteLine("Enter the Look Values");
+			{
+				look=int.Parse(Console.ReadLine());
+			}
+			for (int i=0;i<10;i++)
+			{
+				mid=(minimum+maximum)/2;
+				if(array[mid]==look)
+				{
+					Console.WriteLine("Found");
+					break;
+				}
+				
+				if(array[mid]<look)
+				{
+					minimum=mid+1;
+				}
+				else
+				{
+					maximum=mid-1;
+				}
+				
+				if(minimum>maximum)
+				{
+					Console.WriteLine("Not Found");
+				}
+			}
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
+
+
+
+5.TREE
+
+namespace Tree
+{
+	    class Node
+    {
+        public int item;
+        public Node leftc;
+        public Node rightc;
+        
+        public void Display()
+        {
+            Console.Write("[");
+            Console.Write(item);
+            Console.Write("]");
+            
+        }
+                
+            
+        }
+    class Treee
+    {
+        public Node root;
+        
+        public Treee()
+        {
+            root=null;
+        }
+        public Node ReturnRoot()
+        {
+            return root;
+        }
+        public void Insert(int id)
+        {
+            Node newNode=new Node();
+            newNode.item=id;
+            
+            if(root==null)
+            {
+                root=newNode;
+            }
+            else
+            {
+                Node current =root;
+                Node parent;
+                
+                while(true)
+                {
+                    parent=current;
+                    
+                    if(id<current.item)
+                    {
+                        current=current.leftc;
+                        
+                        if(current==null)
+                        {
+                            parent.leftc=newNode;
+                            return;
+                        }
+                    }
+                    else{
+                        current=current.rightc;
+                        if(current==null)
+                        {
+                            parent.rightc=newNode;
+                            return;
+                            
+                        }
+                    }
+                }
+            }
+        }
+        public void Preorder(Node root)
+    {
+        if(root!=null)
+        {
+            Console.Write(root.item + " ");
+            Preorder(root.leftc);
+            Preorder(root.rightc);
+            
+        }
+    }
+        public void Inorder(Node root)
+        {
+            if(root!=null)
+        {
+            
+            Inorder(root.leftc);
+            Console.Write(root.item + " ");
+            Inorder(root.rightc);
+            
+        }
+            
+        }
+        public void Postorder(Node root)
+    {
+        if(root!=null)
+        {
+            
+            Postorder(root.leftc);
+            Postorder(root.rightc);
+            Console.Write(root.item + " ");
+            
+        }
+     }
+        
+    }
+    
+    class Program
+    {
+        public static void Main(string[] args)
+        {
+            Treee obj=new Treee();
+            obj.Insert(10);
+            obj.Insert(20);
+            obj.Insert(30);
+            obj.Insert(40);
+            obj.Insert(50);
+            obj.Insert(60);
+            obj.Insert(70);
+            obj.Insert(80);
+            obj.Insert(90);
+            
+            Console.WriteLine("Inorder traversal");
+            obj.Inorder(obj.ReturnRoot());
+            Console.WriteLine(" ");
+            Console.WriteLine();
+            
+            Console.WriteLine("Preorder traversal");
+            obj.Preorder(obj.ReturnRoot());
+            Console.WriteLine(" ");
+            Console.WriteLine();
+            
+            Console.WriteLine("Postorder traversal");
+            obj.Postorder(obj.ReturnRoot());
+            Console.WriteLine(" ");
+            Console.WriteLine();
+            
+            
+            
+            
+            
+            
+            Console.Write("Press any key to continue . . . ");
+            Console.ReadKey(true);
+        }
+    }
+}
+
+6.INSERTION SORTING
+
+class Program
+	{
+		public static void Main(string[] args)
+		{
+			int [] array={1,3,5,4,7,2};
+		//	int arraylength=num.Length;
+			
+			int j,temp;
+			for(int i=1;i<array.Length;i++)
+			{
+				temp=array[i];
+				j=i-1;
+				
+				while(j>=0 && array[j]>temp)
+				{
+					array[j+1]=array[j];
+					j--;
+					
+				}
+				array[j+1]=temp;
+			}
+			for(int i=0;i<array.Length;i++)
+			{
+				Console.Write(" " + array[i]);
+			}
+		
+			
+				
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
+
+
+
+7.QUICK SORTING
+
+class Program
+	{
+		void Quicksort(int[] arr,int left,int right)
+			{
+				int i=left,j=right,temp,pivot=arr[(left+right)/2];
+				while(i<=j)
+				{
+					while(arr[i]<pivot)
+					{
+						i++;
+					}
+					while(arr[j]>pivot)
+					{
+						j--;
+					}
+					if(i<=j)
+					{
+						temp=arr[i];
+						arr[i]=arr[j];
+						arr[j]=temp;
+						i++;j--;
+					}
+				}
+				if(left<j)
+				{
+					Quicksort(arr,left,j);
+				}
+				if(right>i)
+				{
+					Quicksort(arr,i,right);
+				}
+					
+			}
+		
+		
+		
+		public static void Main(string[] args)
+		{
+			Program obj=new Program();
+			int[] arr=new int[5];
+			Console.WriteLine("Enter 5 Values");
+			
+			for(int i=0;i<arr.Length;i++)
+			{
+				arr[i]=int.Parse(Console.ReadLine());
+			}
+			
+			int left=0,right=arr.Length-1;
+			obj.Quicksort(arr,left,right);
+			
+			for(int i=0;i<arr.Length;i++)
+			{
+				Console.WriteLine(" " + arr[i]);
+			}
+			
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+       	}
+}
+
+
+
+8.QUEUE
+
+class Program
+	{	
+		public int rear = 0,front = 0;
+		public string[] queue = new string[5];
+		
+		
+		public void enqueue()
+		{
+			if(rear < queue.Length)
+			{
+				Console.WriteLine("enter the value");
+			    queue[rear] = Console.ReadLine();
+			    rear++;
+			}
+			else
+			{
+				Console.WriteLine("queue full");
+			}
+			
+		}
+		
+		
+		public void dqueue()
+		{
+			if (front!=rear)
+			{
+				front++;
+			}
+			else{
+				Console.WriteLine("queue full");
+			}
+		}
+		
+		
+		public void display()
+		{
+			for (int i = front; i < rear; i++)
+			{
+				Console.WriteLine(queue[i]);
+			}
+		}
+		
+		
+		public static void Main(string[] args)
+		{
+			Program obj = new Program();
+			int choice;
+			bool loop = true;
+			while (loop) 
+			{
+				Console.WriteLine(" Enter\n 1 to Enqueue\n 2 to Dequeue\n 3 to Display\n 4 to Exit");
+				choice = int.Parse(Console.ReadLine());
+				switch (choice) {
+						case 1: obj.enqueue();
+						break;
+						case 2: obj.dqueue();
+						break;
+						case 3: obj.display();
+						break;
+						case 4: loop = false;
+						
+						Console.WriteLine("Exit Successfully");
+						break;
+						default: Console.WriteLine("Invalid");
+						break;
+						
+				}
+			}
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+
+
+
+9.LINEAR SEARCH
+
+class Program
+	{
+		public static void Main(string[] args)
+		{
+			int [] array={1,4,7,0,4,78,6};
+			int look;
+			
+			Console.WriteLine("Entre the Value of look");
+			{
+				look=int.Parse(Console.ReadLine());
+			}
+			
+			for(int i=0;i<array.Length;i++)
+			{
+				if(look==array[i])
+				{
+					Console.WriteLine("Founded");
+				}
+				else
+				{
+					Console.WriteLine("Not Founded");
+				}
+			}
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
+
+
+
+10.GRAPH(BFS AND DFS)
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace Graph_DFS_and_BFS_
+{
+	class graph
+	{
+		private int _v;
+		private bool _directed;
+		LinkedList<int>[]_adj;
+		public graph(int v,bool directed)
+		{
+			_adj=new LinkedList<int>[v];
+			for(int i=0;i<_adj.Length;i++)
+			{
+				_adj[i]=new LinkedList<int>();
+			}
+			_v=v;
+			_directed=directed;
+		}
+		public void AddEdge(int v ,int w)
+		{
+			_adj[v].AddLast(w);
+			if(!_directed)
+			{
+				_adj[w].AddLast(v);
+			}
+		}
+		public void DepthFirstSearch(int v )
+		{
+			bool[] Visited=new bool[_v];
+			for(int i =0;i<_v;i++)
+				Visited[i]=false;
+			DFSUtil(v,Visited);
+		}
+		public void BFS(int s)
+		{
+			bool[] visited=new bool[_v];
+			for(int i=0;i<_v;i++)
+			{
+				visited[i]=false;
+			}
+			LinkedList<int> queue=new LinkedList<int>();
+			visited[s]=true;
+			queue.AddLast(s);
+			while (queue.Any())
+			{
+				s=queue.First();
+				Console.Write(" "+s);
+				queue.RemoveFirst();
+				LinkedList<int>list=_adj[s];
+				foreach (var val in list) 
+				{
+					if(!visited[val])
+					{
+						visited[val]=true;
+						queue.AddLast(val);
+					}
+				}
+			}
+		}
+		private void DFSUtil(int v,bool[] Visited)
+		{
+			Visited[v]=true;
+			Console.Write(v+" ");
+			LinkedList<int> list=_adj[v];
+			foreach(var val in list)
+			{
+				if(!Visited[val])
+					DFSUtil(val,Visited);
+			}
+		}
+	}
+	class Program
+	{
+		static void Main(String[] args)
+		{
+			graph g=new graph(7,true);
+			g.AddEdge(0,2);
+			g.AddEdge(0,3);
+			g.AddEdge(1,0);
+			g.AddEdge(1,5);
+			g.AddEdge(2,5);
+			g.AddEdge(3,0);
+			g.AddEdge(3,4);
+			g.AddEdge(4,6);
+			g.AddEdge(5,1);
+			g.AddEdge(6,5);
+			Console.Write("Depth First Traversal From Vertex 2:\n");
+			g.DepthFirstSearch(0);
+			Console.WriteLine();
+			
+			Console.Write("Breadth First Traversal From Vertex 2:\n");
+			g.BFS(0);
+			Console.WriteLine();
+			Console.ReadKey();
+		
+		}
+	}
+}
+
+
+11.LINKED LIST WITH SWITCH
+
+{
+	public class Node
+	{
+		public Node next;
+		public Object value;
+	}
+	
+	public class LinkedList
+	{
+		private Node head;
+		private Node current;
+		public int count;
+		
+		public LinkedList()
+		{
+			head=new Node();
+			current=head;
+		}
+		
+		public void AddatLast(Object data)
+		{
+			Node newNode=new Node();
+			newNode.value=data;
+			current.next=newNode;
+			current=newNode;
+			count++;
+		}
+		public void RemoveatStart()
+		{
+			if(count>0)
+			{
+				head=head.next;
+				count--;
+			}
+			else
+			{
+				Console.WriteLine("No Elements are there to be Delete");
+			}
+		}
+		
+		public void AddatStart(Object data)
+		{
+			Node newNode=new Node();
+			newNode.value=data;
+			newNode.next=head.next;
+			head.next=newNode;
+			count++;
+		}
+		
+		public void DisplayList()
+		{
+			Console.Write("Head->");
+			Node current=head;
+			while(current.next!=null)
+			{
+				current=current.next;
+				Console.Write(" " + current.value);
+				Console.Write("->");
+			}
+			Console.Write("Null\n");
+		}
+		public void AddAtMid(int pos,string value)
+		{
+			Node current = head;
+			int counter=0;
+			Node newnode = new Node();
+			if(pos==count +1)
+			{
+				AddatLast(value);
+			}
+			else if(pos==1)
+			{
+				AddatStart(value);
+			}
+			else if(pos<=count)
+			{
+				while(counter!=pos)
+				{
+					current=current.next;
+					counter++;
+				}
+				newnode.value=value;
+				newnode.next=current.next;
+				current.next=newnode;
+				count++;
+			}
+			else
+			{
+				Console.WriteLine("Invalid Position");
+			}
+		}
+		public void RemoveAtMid(int pos)
+		{
+			int counter =1;
+			Node current=head;
+			if(pos<=count&&pos>1)
+			{
+				while(counter!=pos)
+				{
+					current=current.next;
+					counter++;
+				}
+				current.next=current.next.next;
+				count--;
+			}
+			else if(pos==1)
+			{
+				RemoveatStart();
+			}
+			else
+			{
+				Console.WriteLine("Invalid Position");
+			}
+		}
+	}
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+			LinkedList llist=new LinkedList();
+			int choice=0;
+			string data;
+			int pos;
+			
+			while(choice!=7)
+			{
+				Console.WriteLine("Press\n 1 to Add at Start\n 2 to Add in Between\n 3 to Add at Last\n 4 to Delete at Start\n 5 to Delete at Mid\n 6 to Display\n 7 to Exit");
+				choice=int.Parse(Console.ReadLine());
+				
+				switch(choice)
+				{
+						case 1:Console.WriteLine("Enter the Data");
+						data=Console.ReadLine();
+						llist.AddatStart(data);
+						break;
+						
+						case 2:Console.WriteLine("Enter the Position");
+						pos=int.Parse(Console.ReadLine());
+						Console.WriteLine("Enter the Data");
+						data=Console.ReadLine();
+						llist.AddAtMid(pos,data);
+						break;
+						
+						case 3:Console.WriteLine("Enter the Data");
+						data=Console.ReadLine();
+						llist.AddatLast(data);
+				        break;
+						
+						case 4:llist.RemoveatStart();
+						break;
+						
+						case 5:Console.WriteLine("Enter the Position");
+						pos=int.Parse(Console.ReadLine());
+						llist.RemoveAtMid(pos);
+						break;
+						
+						case 6:Console.WriteLine("The datas in the List");
+						llist.DisplayList();
+						break;
+						
+						case 7:Console.WriteLine("Exit Successfully");
+						break;
+						
+						default:Console.WriteLine("Invalid Input");
+						break;
+						
+						
+				}
+			}
+			
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
+
+
+12.MERGE SORTING
+
+
+   class Program
+    {
+        public static void Main(string[] args)
+        {
+            int[] numbers={0,5,8,9,2,7,3,1,4,6,10};
+            SortedMethod(numbers,0,numbers.Length-1);
+             for(int i=0;i<numbers.Length;i++)
+                {
+                    Console.Write(" "+numbers[i]);
+                }
+             Console.WriteLine();
+            Console.Write("Press any key to continue . . . ");
+            Console.ReadKey(true);
+        }
+         public static     void MergeMethod(int[] num,int left,int mid,int right)
+         {
+            int[] temp=new int[25];
+            int i,leftend,numtelements,temppos;
+            leftend=(mid-1);
+            temppos=left;
+            numtelements=(right-left)+1;
+            while((left<=leftend)&&(mid<=right))
+            {
+                if(num[left]<=num[mid])
+                {
+                    temp[temppos++]=num[left++];
+                    
+                }
+                else
+                {
+                    temp[temppos++]=num[mid++];
+                }
+            }
+            while(left<=leftend)
+                temp[temppos++]=num[left++];
+            while(mid<=right)
+                temp[temppos++]=num[mid++];
+            for(i=0;i<numtelements;i++)
+            {
+                num[right]=temp[right];
+                right--;
+            }
+                
+        }
+        public static     void SortedMethod(int[] num,int left,int right)
+        {
+            int mid;
+            if(right>left)
+            { 
+                mid=(right+left)/2;
+                SortedMethod(num,left,mid);
+                SortedMethod(num,(mid+1),right);
+                MergeMethod(num,left,(mid+1),right);
+            }
+        }
+    }
+
+13.GRAPH(BFS and DFS)WITH SWITCH.
+
+
+class graph
+	{
+		private int _v;
+		private bool _directed;
+		LinkedList<int>[]_adj;
+		public graph(int v,bool directed)
+		{
+			_adj=new LinkedList<int>[v];
+			for(int i=0;i<_adj.Length;i++)
+			{
+				_adj[i]=new LinkedList<int>();
+			}
+			_v=v;
+			_directed=directed;
+		}
+		public void AddEdge(int v ,int w)
+		{
+			_adj[v].AddLast(w);
+			if(!_directed)
+			{
+				_adj[w].AddLast(v);
+			}
+		}
+		public void DepthFirstSearch(int v )
+		{
+			bool[] Visited=new bool[_v];
+			for(int i =0;i<_v;i++)
+				Visited[i]=false;
+			DFSUtil(v,Visited);
+		}
+		public void BFS(int s)
+		{
+			bool[] visited=new bool[_v];
+			for(int i=0;i<_v;i++)
+			{
+				visited[i]=false;
+			}
+			LinkedList<int> queue=new LinkedList<int>();
+			visited[s]=true;
+			queue.AddLast(s);
+			while (queue.Any())
+			{
+				s=queue.First();
+				Console.Write(" "+s);
+				queue.RemoveFirst();
+				LinkedList<int>list=_adj[s];
+				foreach (var val in list) 
+				{
+					if(!visited[val])
+					{
+						visited[val]=true;
+						queue.AddLast(val);
+					}
+				}
+			}
+		}
+		private void DFSUtil(int v,bool[] Visited)
+		{
+			Visited[v]=true;
+			Console.Write(v+" ");
+			LinkedList<int> list=_adj[v];
+			foreach(var val in list)
+			{
+				if(!Visited[val])
+					DFSUtil(val,Visited);
+			}
+		}
+	}
+	class Program
+	{
+		static void Main(String[] args)
+		{
+			
+			graph g=new graph(7,true);
+			g.AddEdge(0,2);
+			g.AddEdge(0,3);
+			g.AddEdge(1,0);
+			g.AddEdge(1,5);
+			g.AddEdge(2,5);
+			g.AddEdge(3,0);
+			g.AddEdge(3,4);
+			g.AddEdge(4,6);
+			g.AddEdge(5,1);
+			g.AddEdge(6,5);
+		/*	Console.Write("Depth First Traversal From Vertex 2:\n");
+			g.DepthFirstSearch(0);
+			Console.WriteLine();
+			
+			Console.Write("Breadth First Traversal From Vertex 2:\n");
+			g.BFS(0);
+			Console.WriteLine();
+			
+		*/
+			
+			
+			
+		int choice=0;
+			
+			while(choice!=3)
+			{
+				Console.WriteLine("\n Press\n 1 to Display DFS\n 2 to Display BFS\n 3 to Exit");
+				choice=int.Parse(Console.ReadLine());
+				switch(choice)
+				{
+						case 1:Console.WriteLine("DFS");
+						g.DepthFirstSearch(0);
+						break;
+						
+						case 2:Console.WriteLine("BFS");
+						g.BFS(0);
+						break;
+						
+						case 3:Console.WriteLine("Exit Successfully");
+						break;
+						
+						default:Console.WriteLine("Invalid Input");
+						break;
+						
+				}
+			}
+			Console.Write("Press any key to continue.............");
+			Console.ReadKey(true);
+		
+		}
+	}
+
+14.TREE WITH SWITCH
+
+class Node
+	{
+		public int item;
+		public Node leftc;
+		public Node rightc;
+		
+		public void Display()
+		{
+			Console.Write("[");
+			Console.Write(item);
+			Console.Write("]");
+			
+		}
+				
+			
+		}
+	class Tree
+	{
+		public Node root;
+		
+		public Tree()
+		{
+			root=null;
+		}
+		public Node ReturnRoot()
+		{
+			return root;
+		}
+		public void Insert(int id)
+		{
+			Node newNode=new Node();
+			newNode.item=id;
+			
+			if(root==null)
+			{
+				root=newNode;
+			}
+			else
+			{
+				Node current =root;
+				Node parent;
+				
+				while(true)
+				{
+					parent=current;
+					
+					if(id<current.item)
+					{
+						current=current.leftc;
+						
+						if(current==null)
+						{
+							parent.leftc=newNode;
+							return;
+						}
+					}
+					else
+					{
+						current=current.rightc;
+						if(current==null)
+						{
+							parent.rightc=newNode;
+							return;
+							
+						}
+					}
+				}
+			}
+		}
+		public void Preorder(Node root)
+	{
+		if(root!=null)
+		{
+			Console.Write(root.item + " ");
+			Preorder(root.leftc);
+			Preorder(root.rightc);
+			
+		}
+	}
+		public void Inorder(Node root)
+		{
+			if(root!=null)
+		{
+			
+			Inorder(root.leftc);
+			Console.Write(root.item + " ");
+			Inorder(root.rightc);
+			
+		}
+			
+		}
+		public void Postorder(Node root)
+	{
+		if(root!=null)
+		{
+			
+			Postorder(root.leftc);
+			Postorder(root.rightc);
+			Console.Write(root.item + " ");
+			
+		}
+	 }
+		
+	}
+	
+	class Program
+	{
+		public static void Main(string[] args)
+		{
+			Tree theTree=new Tree();
+			int data;
+			int choice=0;
+			while (choice!=5) 
+			{
+				Console.WriteLine("\npress\n1.to add\n2.to display in In-Order traversal\n3.to display in Pre-Order traversal\n4.to display in Post-Order\n5.to exit");
+				choice=int.Parse(Console.ReadLine());
+				switch (choice) 
+				{
+						case 1:Console.WriteLine("enter data");
+						data=int.Parse(Console.ReadLine());
+						theTree.Insert(data);
+						break;
+						case 2:Console.WriteLine("In-Order (left-root-right)");
+						theTree.Inorder(theTree.ReturnRoot());
+						break;
+						case 3:Console.WriteLine("Pre-Order (root-left-right");
+						theTree.Preorder(theTree.ReturnRoot());
+						break;
+						case 4:Console.WriteLine("Post Order (left-right-root)");
+						theTree.Postorder(theTree.ReturnRoot());
+						break;
+						case 5:Console.WriteLine("exit successfull");
+						break;
+						default:Console.WriteLine("Invalid Input");
+						break;
+				}
+			}
+			Console.Write("Press any key to continue . . . ");
+			Console.ReadKey(true);
+		}
+	}
+}
