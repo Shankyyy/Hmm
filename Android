@@ -1,0 +1,495 @@
+
+1.DATABASE MAIN.
+
+public class LibrarianInputActivity extends AppCompatActivity
+{
+    EditText id,studentname,classs,bookid,date,datesubmit;
+    Button insert,update,read,delete;
+
+    DatabaseHelper myDb;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_librarian_input);
+
+        id=(EditText)findViewById(R.id.id);
+        studentname=(EditText)findViewById(R.id.studentname);
+        classs=(EditText)findViewById(R.id.classs);
+        bookid=(EditText)findViewById(R.id.bookid);
+        date=(EditText)findViewById(R.id.date);
+        datesubmit=(EditText)findViewById(R.id.datesubmit);
+
+        insert=(Button)findViewById(R.id.insert);
+        update=(Button)findViewById(R.id.update);
+        read=(Button)findViewById(R.id.read);
+        delete=(Button)findViewById(R.id.delete);
+
+        myDb=new DatabaseHelper(this);
+        Insert();
+        Read();
+        Update();
+        Delete();
+
+    }
+    public void Insert()
+    {
+        insert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isinserted = myDb.insertData(studentname.getText().toString(), classs.getText().toString(), bookid.getText().toString(), date.getText().toString(), datesubmit.getText().toString());
+                if (isinserted == true) {
+                    Toast.makeText(getApplicationContext(), "DATA INSERTED", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "DATA IS NOT INSERTED", Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+    }
+    public void Read()
+    {
+        read.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent i=new Intent(getApplicationContext(),ReadActivity.class);
+                startActivity(i);
+
+            }
+        });
+    }
+    public void Update()
+    {
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean updatedata=myDb.updateData(id.getText().toString(),studentname.getText().toString(),classs.getText().toString(),bookid.getText().toString(),date.getText().toString(),datesubmit.getText().toString());
+                if(updatedata==true)
+                {
+                    Toast.makeText(getApplicationContext(),"DATA UPDATED",Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"DATA IS NOT UPDATED",Toast.LENGTH_SHORT).show();
+
+
+                }
+            }
+        });
+    }
+    public void Delete()
+    {
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int data=myDb.deleteData(id.getText().toString());
+                if (data>=1)
+                {
+                    Toast.makeText(getApplicationContext(),"DATA DELETED",Toast.LENGTH_SHORT).show();
+
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(),"DATA IS NOT DELETED",Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });
+    }
+
+    }
+
+
+2.READ MAIN.
+
+public class ReadActivity extends AppCompatActivity
+{
+    TextView text;
+    DatabaseHelper myDb;
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_read);
+
+        text=(TextView)findViewById(R.id.text);
+        myDb=new DatabaseHelper(this);
+
+        display();
+    }
+
+    public void display()
+    {
+        Cursor res=myDb.read();
+        StringBuffer stringBuffer=new StringBuffer();
+        while (res.moveToNext())
+        {
+            stringBuffer.append("   \n");
+            stringBuffer.append("ID: "+res.getString(0)+"\n"+"Student: "+res.getString(1)+"\n"+"Class: "+res.getString(2)+"\n"+"Book: "+res.getString(3)+"\n"+"Date: "+res.getString(4)+"\n"+"Dates: "+res.getString(5)+"\n");
+            text.setText(stringBuffer.toString());
+        }
+    }
+}
+
+
+
+3.DATABASE HELPER.
+
+public class DatabaseHelper extends SQLiteOpenHelper
+{
+    public static final String DATABASE_TABLE=("student.db");
+    public static final String TABLE_NAME=("student_table");
+    public static final String COL_1=("id");
+    public static final String COL_2=("student");
+    public static final String COL_3=("cla");
+    public static final String COL_4=("book");
+    public static final String COL_5=("date");
+    public static final String COL_6=("dates");
+
+
+
+
+    public DatabaseHelper(Context context)
+    {
+        super(context, DATABASE_TABLE,null,1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db)
+    {
+        db.execSQL("create table "+TABLE_NAME+" (id integer primary key autoincrement, student text, cla text, book text, date text, dates text)");
+
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
+    {
+
+    }
+
+    public boolean insertData(String student,String cla,String book,String date,String dates)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(COL_2,student);
+        contentValues.put(COL_3,cla);
+        contentValues.put(COL_4,book);
+        contentValues.put(COL_5,date);
+        contentValues.put(COL_6,dates);
+
+        db.insert(TABLE_NAME,null,contentValues);
+        return true;
+    }
+    public Cursor read()
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor res=db.rawQuery("select * from "+TABLE_NAME,null);
+        return res;
+    }
+    public boolean updateData(String id,String student,String cla,String book,String date,String dates)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(COL_1,id);
+        contentValues.put(COL_2,student);
+        contentValues.put(COL_3,cla);
+        contentValues.put(COL_4,book);
+        contentValues.put(COL_5,date);
+        contentValues.put(COL_6,dates);
+
+        db.update(TABLE_NAME,contentValues,"ID=?",new String[]{id});
+        return  true;
+    }
+    public Integer deleteData(String id)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put(COL_1,id);
+
+        return db.delete(TABLE_NAME,"ID=?",new String[]{id});
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+4.LOGIN.
+
+
+public class LibrarianLoginActivity extends AppCompatActivity
+{
+    EditText userlibrarian,passwordlab;
+    Button loginlibrarian;
+
+    String User1="lab";
+    String Pass1="lab123";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_librarian_login);
+
+        userlibrarian=(EditText)findViewById(R.id.userlibrarian);
+        passwordlab=(EditText)findViewById(R.id.passwordlab);
+
+        loginlibrarian=(Button)findViewById(R.id.loginlibrarian);
+
+        lablogin();
+
+
+    }
+    public void lablogin()
+    {
+        loginlibrarian.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                String user1=userlibrarian.getText().toString();
+                String pass1=passwordlab.getText().toString();
+
+                if(user1.matches(User1)&&pass1.matches(Pass1))
+                {
+                    Intent i=new Intent(getApplicationContext(),LibrarianInputActivity.class);
+                    startActivity(i);
+
+
+                }
+             else
+              {
+                  Toast.makeText(getApplicationContext(),"PLEASE ENTER THE DETAILS FIRST",Toast.LENGTH_SHORT).show();
+              }
+
+            }
+        });
+
+
+    }
+}
+
+
+
+
+5.Radio Group.
+
+
+public class MainActivity extends AppCompatActivity
+{
+    RadioGroup rj;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        rj=(RadioGroup)findViewById(R.id.radio);
+        rj.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i)
+            {
+                switch (i)
+                {
+                    case R.id.redButton:
+                        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FF081C8F"));
+                        break;
+                    case R.id.greenButton:
+                        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FF06A606"));
+                        break;
+                    case R.id.blueButton:
+                        getWindow().getDecorView().setBackgroundColor(Color.parseColor("#FFE10D14"));
+                }
+
+            }
+        });
+
+
+    }
+}
+
+
+
+
+6.LIST VIEW
+
+
+public class MainActivity extends AppCompatActivity
+{
+    ListView list;
+    String[] arr=new String[]{"Shankar","Bhai"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        list=(ListView)findViewById(R.id.list);
+        listMethod();
+    }
+    public void listMethod()
+    {
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this,R.layout.layout,arr);
+        list.setAdapter(arrayAdapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+            {
+                if (position==0)
+                {
+                    Intent i =new Intent(getApplicationContext(),OneActivity.class);
+                    startActivityForResult(i,0);
+
+                }
+                if (position==1)
+                {
+                    Intent i =new Intent(getApplicationContext(),TwoActivity.class);
+                    startActivityForResult(i,1);
+
+                }
+
+            }
+        });
+    }
+}
+
+
+
+
+7.MUSIC APP
+
+
+Step1
+raw
+New
+Audio Dictionary
+
+Step2
+Copy paste the Audio
+
+Step3
+
+
+
+
+
+
+public class MainActivity extends AppCompatActivity
+{
+    MediaPlayer mediaPlayer;
+    Button play,stop,pause;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        play=(Button)findViewById(R.id.play);
+        stop=(Button)findViewById(R.id.stop);
+        pause=(Button)findViewById(R.id.pause);
+        mediaPlayer=MediaPlayer.create(getApplicationContext(),R.raw.audio);
+
+        PlayMethod();
+        PauseMethod();
+        StopMethod();
+
+    }
+    public void PlayMethod()
+    {
+        play.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mediaPlayer.start();
+            }
+        });
+
+    }
+    public void PauseMethod()
+    {
+        pause.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mediaPlayer.pause();
+            }
+        });
+
+    }
+    public void StopMethod()
+    {
+       stop .setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                mediaPlayer.seekTo(0);
+                mediaPlayer.stop();
+            }
+        });
+
+    }
+
+}
+
+
+
+
+
+8.VIDEO APP
+
+
+Step1
+res
+Audio Dictionary
+Copy Paste Video
+
+Sptep2 
+Change Colour
+Values
+and Change the Colour
+
+
+public class MainActivity extends AppCompatActivity
+{
+    VideoView videoview;
+    MediaController myplayer;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState)
+    {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        videoview=(VideoView)findViewById(R.id.videoview);
+        videoview.setVideoPath("android.resource://"+getPackageName()+"/"+R.raw.naruto);
+        myplayer=new MediaController(this);
+        videoview.setMediaController(myplayer);
+        videoview.start();
+
+    }
+}
+
+
+
